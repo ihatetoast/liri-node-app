@@ -1,0 +1,22 @@
+{
+  "name": "08_node-intro_17jan",
+  "version": "1.0.0",
+  "description": "### Overview",
+  "main": "keys.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ihatetoast/liri-node-app.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Katy Cassidy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ihatetoast/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/ihatetoast/liri-node-app#readme"
+}

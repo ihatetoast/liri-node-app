@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/ihatetoast/liri-node-app/issues"
   },
-  "homepage": "https://github.com/ihatetoast/liri-node-app#readme"
+  "homepage": "https://github.com/ihatetoast/liri-node-app#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.83.0",
+    "twitter": "^1.7.1"
+  }
 }

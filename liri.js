@@ -2,10 +2,13 @@
 require("dotenv").config();
 
 //requires
+//3rd party:
 const request = require('request');
-const keys = require('./keys.js');
+const _ = require('lodash');
 const Spotify = require('node-spotify-api');
 const Table = require('cli-table');
+//own
+const keys = require('./keys.js');
 //instantiations:
 const spotify = new Spotify(keys.spotify);
 const movieTable = new Table();
@@ -15,6 +18,12 @@ const movieTable = new Table();
 const command = process.argv[2];
 //capture 4th input which will be either
 const titleReq = process.argv[3];
+
+
+//TODO input from inquire
+//TODO. input validation with lodash: _.isString(userinput) should be true for some things and be sure to run nodemon (with text expander helper until /bin is fixed)
+
+
 
 /***************************
 SPOTIFY THIS SONG

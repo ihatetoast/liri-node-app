@@ -1,10 +1,11 @@
-//keep it secret
 require("dotenv").config();
 
 //requires
 //3rd party:
 const request = require('request');
+const fs = require('fs');
 const _ = require('lodash');
+const yargs = require('yargs');
 const Spotify = require('node-spotify-api');
 const Table = require('cli-table');
 //own
@@ -14,7 +15,8 @@ const spotify = new Spotify(keys.spotify);
 const movieTable = new Table();
 
 // var client = new Twitter(keys.twitter);
-
+//try yargs?
+const argv = yargs.argv;
 const command = process.argv[2];
 //capture 4th input which will be either
 const titleReq = process.argv[3];
@@ -111,6 +113,21 @@ const movieThis = (name) =>{
 // This will show your last 20 tweets and when they were created at in your terminal/bash window.
 //capture the argument vectors of the command (my-tweets etc)
 //f(x) to ret 20 and when sent
+
+
+
+/***************************
+DO WHAT IT SAYS
+*****************************/
+
+//INSTRUCTIONS//
+// node liri.js do-what-it-says
+
+const doWhatItSays =() => { 
+  const rando = 
+  console.log('do what it said fired');
+}
+
 
 //use switch for commands after f(x) built
 // my-tweets

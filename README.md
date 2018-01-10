@@ -1,5 +1,12 @@
 
 # LIRI Bot
+
+## Commands:
+npm start `<command>` where command is one of the following:
+
+* movie-this + "movie title" 
+* ex npm start movie-this 'sixteen candles'
+
 ##Overview
 In this assignment, you will make LIRI, which is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a Language Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
 

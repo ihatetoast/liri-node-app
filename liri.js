@@ -1,31 +1,34 @@
 require("dotenv").config();
 
-//requires
 //3rd party:
-const request = require('request');
 const fs = require('fs');
 const _ = require('lodash');
 const yargs = require('yargs');
+const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 const Table = require('cli-table');
 //own
-const keys = require('./keys.js');
-//instantiations:
-const spotify = new Spotify(keys.spotify);
-const movieTable = new Table();
+const keys = require('./keys');
+const omdb = require('./omdb');
+const spotify = require('./spotify');
 
-// var client = new Twitter(keys.twitter);
+const client = new Twitter(keys.twitter);
+
+// 
 //try yargs?
+//use help to list command titles, command 
 const argv = yargs.argv;
 const command = process.argv[2];
 //capture 4th input which will be either
 const titleReq = process.argv[3];
 
-
-//TODO input from inquire
-//TODO. input validation with lodash: _.isString(userinput) should be true for some things and be sure to run nodemon (with text expander helper until /bin is fixed)
-
-
+const tweetTable = new Table({
+  chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
+         , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
+         , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
+         , 'right': '' , 'right-mid': '' , 'middle': ' ' },
+  style: { 'padding-left': 0, 'padding-right': 0 }
+});
 
 /***************************
 SPOTIFY THIS SONG
@@ -40,81 +43,75 @@ SPOTIFY THIS SONG
      * The album that the song is from// const album
    * If no song is provided then your program will default to "A town called Malice" by The Jam because ace of base blows.
  */
-const spotifyThisSong = (title) =>{
-  spotify.search({ 
-    type: 'track', 
-    query: titleReq || 'A Town Called Malice'
-  }, 
-    function(err, data) {
-      if (err) {
-        return console.log('Error occurred: ' + err);
-      }
-  //v1: return just one. (want to finish all 4 before returning to loop over returned data). Sorry, but it took me two days to decipher the instructions.
-  const preview = data.tracks.items[0].preview_url;
-  const artist = data.tracks.items[2].artists[0].name;
-  console.log(`artist is ${artist}`);
-  });
-}
+// const spotifyThisSong = (title) =>{
+//   console.clear();
+//   spotify.search({ 
+//     type: 'track', 
+//     query: titleReq || 'A Town Called Malice'
+//   }, 
+//     function(err, data) {
+//       if (err) {
+//         return console.log('Error occurred: ' + err);
+//       }
+//   //v1: return just one. (want to finish all 4 before returning to loop over returned data). 
+//   const preview = data.tracks.items[0].preview_url;
+//   const artist = data.tracks.items[0].artists[0].name;
+//   const album = data.tracks.items[0].artists[0].name;
+//   console.log(`artist is ${artist}`);
+//   });
+// }
 
 
 /***************************
-MOVIE THIS
+        MOVIE THIS
 *****************************/
-
-/*
-This will output the following information to your terminal/bash window:
-
-       * Title of the movie
-       * Year the movie came out.
-       * IMDB Rating of the movie.
-       * Rotten Tomatoes Rating of the movie.
-       * Country where the movie was produced. <--Who cares?
-       * Language of the movie.
-       * Plot of the movie.
-       * Actors in the movie.
-
-   * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.' <-- no. i'll choose my own defaults, thank you very much. THE CASTLE
- */
-
-//  deal with this after all 4 f(x)s done
-// let name = '';
-// for(let i = 2; i<process.argv.length; i++){
-//   name += " " + process.argv[i] 
+// const movieThis = (name) =>{
+//   console.clear();
+//   const url = `http://www.omdbapi.com/?t=${name || 'the castle'}&apikey=6a1aca9d`
+//   request(url, function(error, response, body) {
+//     if (!error && response.statusCode === 200) {
+//       const info = JSON.parse(body);
+//       movieTable.push (
+//         {'Movie Title': info.Title},
+//         {'Release Date': info.Year},
+//         {'IMDB Rating': info.Ratings[0].Value},
+//         {'Rotten Tomatoes Rating': info.Ratings[1].Value},
+//         {'Country(ies)': info.Country },
+//         {'Language': info.Language},
+//         {'Starring': info.Actors},
+//         {'Plot': info.Plot},
+//       )
+//       console.log(movieTable.toString());
+//     }
+//   });
 // }
 
-const movieThis = (name) =>{
-  const url = `http://www.omdbapi.com/?t=${name || 'the castle'}&apikey=6a1aca9d`
-  request(url, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      const info = JSON.parse(body);
-      movieTable.push (
-        {'Movie Title': info.Title},
-        {'Release Date': info.Year},
-        {'IMDB Rating': info.Ratings[0].Value},
-        {'Rotten Tomatoes Rating': info.Ratings[1].Value},
-        {'Country(ies)': info.Country },
-        {'Language': info.Language},
-        {'Starring': info.Actors},
-        {'Plot': info.Plot},
+/***************************
+    MY TWEETS
+*****************************/
+
+const myTweets = () => {
+  console.clear();
+  //BLOODY HELL!
+  client.get('statuses/user_timeline.json?screen_name=katyannedegraes&count=20', function(error, tweets, response){
+    if(error) throw error;
+    console.log("THE TWEETS");
+    // console.log(typeof tweets);  // returns object  
+
+    for (const tweet in tweets) {
+      // console.log(`${parseInt(tweet)+1}) ${tweets[tweet]["text"]} \ncreated at ${tweets[tweet]["created_at"]}`);
+      tweetTable.push (
+      {'tweet': tweets[tweet]["text"]},
+      {'on': tweets[tweet]["created_at"]}
       )
-      console.log(movieTable.toString());
-
     }
-  });
+    console.log(tweetTable.toString());
+
+
+
+  })
+  
 }
-
-
-
-
-
-
-//INSTRUCTIONS//
-// node liri.js my-tweets
-// This will show your last 20 tweets and when they were created at in your terminal/bash window.
-//capture the argument vectors of the command (my-tweets etc)
-//f(x) to ret 20 and when sent
-
-
 
 /***************************
 DO WHAT IT SAYS
@@ -124,34 +121,28 @@ DO WHAT IT SAYS
 // node liri.js do-what-it-says
 
 const doWhatItSays =() => { 
-  const rando = 
+  console.clear();
   console.log('do what it said fired');
 }
 
 
-//use switch for commands after f(x) built
-// my-tweets
-
-// spotify-this-song
-
-// movie-this
-
-// do-what-it-says
 
 switch (command) {
   case 'my-tweets':
+    myTweets();
     console.log('my tweets fired');
     break;
   case 'spotify-this-song':
-    spotifyThisSong(titleReq);
+    spotify.spotifyThisSong(titleReq);
     console.log(`spotifyThisSong fired. and song name is ${titleReq}`);
     break;
   case 'movie-this':
-    movieThis(titleReq)
+    omdb.movieThis(titleReq)
     console.log(`movieThis is fired. Movie title is ${titleReq}`);
     break;
   case 'do-what-it-says':
     console.log('do what it says.');
+    //not done. not fussed if i don't get here.
     break;
   default:
     console.log(`Sorry, I do not recognise ${command}. Please choose from the following: my-tweets, spotify-this-song, movie-this, or do-what-this-says`);

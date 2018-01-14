@@ -1,4 +1,6 @@
 require("dotenv").config();
+const fs = require('fs');
+
 const request = require('request');
 const Table = require('cli-table');
 
@@ -33,11 +35,18 @@ const spotifyThisSong = (title) =>{
       if (err) {
         return console.log('Error occurred: ' + err);
       }
-  //v1: return just one. (want to finish all 4 before returning to loop over returned data). 
+ 
   const preview = data.tracks.items[0].preview_url;
   const artist = data.tracks.items[0].artists[0].name;
   const album = data.tracks.items[0].artists[0].name;
-  console.log(`artist is ${artist}`);
+  console.log(`${title || "A Town Called Malice"} ${artist}.`);
+      table.push(
+        {'Title': title || 'A Town Called Malice'},
+        {'Artist': artist || "The Jam"},
+        {'Album': album || ''},
+        {'Preview': preview || ''}
+      )
+      console.log(table.toString());
   });
 }
 
@@ -77,11 +86,32 @@ const myTweets = () => {
     }
     console.log(table.toString());
   })
- 
 }
+const randomCommandom = () => {
+  //bloody hell part two
+  //looks like what is read is an object and the comma phux things up. 
+  // const random = fs.readFileSync('random.txt', utf8);
+  fs.readFile("random.txt", "utf8", function(error, text) {
+    if (error)
+      throw error;
+    console.log(typeof text);
+    var textperiment = text.split(',');
+    
+    console.log(`textperiment is ${textperiment}`);
+    // console.log(textperiment[1])
+    const song = textperiment[1];
+    const doThis = textperiment[0];
+    spotifyThisSong(song);
+
+  });
+  // console.log(typeof random);//returns obj
+  // console.log(random[0]);
+}
+
 
 module.exports = {
   spotifyThisSong,
   movieThis,
-  myTweets
+  myTweets,
+  randomCommandom
 }

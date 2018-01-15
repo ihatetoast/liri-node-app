@@ -10,6 +10,7 @@ const inquirer = require('inquirer');
 const commands = require('./commands');
 
 console.clear()
+
 inquirer
 .prompt([
   {type: "list",
@@ -19,7 +20,7 @@ inquirer
 ])
 .then(function(answer){
   var command = answer.commands;
-  console.log(command);
+
   switch (command) {
     case 'my-tweets':
       commands.myTweets();
@@ -56,7 +57,7 @@ inquirer
       break;
     default:
       console.clear();
-      console.log(`Sorry, I do not recognise ${command}. Please choose from the following: my-tweets, spotify-this-song, movie-this, or do-what-this-says`);
+      console.log(`Sorry, I do not recognise ${command}. Please choose from the following: my-tweets, spotify-this-song, movie-this, or do-what-this-says.`);
   }
 })
 

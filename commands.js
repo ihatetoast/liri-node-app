@@ -19,12 +19,6 @@ const table = new Table({
   , 'right': '' , 'right-mid': '' , 'middle': ' ' },
 style: { 'padding-left': 0, 'padding-right': 0 }
 });
-// * This will show the following information about the song in your terminal/bash window
-//      * Artist(s) //later loop. use table to display
-//      * The song's name//user input
-//      * A preview link of the song from Spotify//const preview
-//      * The album that the song is from// const album
-//    * If no song is provided then your program will default to "A town called Malice" by The Jam because ace of base blows.
 
 const spotifyThisSong = (title) =>{
   spotify.search({ 
@@ -76,7 +70,7 @@ const myTweets = () => {
     if(error) throw error;
     console.log("THE TWEETS");
     // console.log(typeof tweets);  // returns object  
-    for (const tweet in tweets) {
+    for (var tweet in tweets) {
       // console.log(`${parseInt(tweet)+1}) ${tweets[tweet]["text"]} \ncreated at ${tweets[tweet]["created_at"]}`);
       table.push (
       {'tweet': tweets[tweet]["text"]},

@@ -1,70 +1,67 @@
 require("dotenv").config();
 
-//3rd party:
+//NODE MODULES
 const fs = require('fs');
-const _ = require('lodash');
-const yargs = require('yargs');
-const Twitter = require('twitter');
-const Spotify = require('node-spotify-api');
-const Table = require('cli-table');
-//own
-const keys = require('./keys');
+
+//THIRD PARTY MODULES
+const inquirer = require('inquirer');
+
+// OWN MODULES
 const commands = require('./commands');
 
+console.clear()
+inquirer
+.prompt([
+  {type: "list",
+  name: "commands",
+  message: "What do you want from LIRI?",
+  choices: ["my-tweets", "spotify-this-song", "movie-this", "do-what-this-says"]}
+])
+.then(function(answer){
+  var command = answer.commands;
+  console.log(command);
+  switch (command) {
+    case 'my-tweets':
+      commands.myTweets();
+      break;
+    case 'spotify-this-song':
+      inquirer
+      .prompt([
+        {
+          name: "song",
+          message: "What song would you LIRI to look up? Use ''s or \"\"s, please."
+        }
+      ])
+      .then(function(answer){
+        var title = answer.song;
+        // console.log(typeof title);//returns string
+        commands.spotifyThisSong(title);
+      })
+      break;
+    case 'movie-this':
+      inquirer
+      .prompt([
+        {
+          name: "movie",
+          message: "What movie would you LIRI to look up? Use ''s or \"\"s, please."
+        }
+      ])
+      .then(function(answer){
+        var title = answer.movie;
+        commands.movieThis(title);
+      })
+      break;
+    case 'do-what-this-says':
+      commands.randomCommandom();
+      break;
+    default:
+      console.clear();
+      console.log(`Sorry, I do not recognise ${command}. Please choose from the following: my-tweets, spotify-this-song, movie-this, or do-what-this-says`);
+  }
+})
 
-const client = new Twitter(keys.twitter);
-
-// 
-//try yargs?
-//use help to list command titles, command 
-const argv = yargs.argv;
-const command = process.argv[2];
-//capture 4th input which will be either
-const title = process.argv[3];
-
-const tweetTable = new Table({
-  chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
-         , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
-         , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
-         , 'right': '' , 'right-mid': '' , 'middle': ' ' },
-  style: { 'padding-left': 0, 'padding-right': 0 }
-});
-
-
-/***************************
-DO WHAT IT SAYS
-*****************************/
-
-//INSTRUCTIONS//
-// node liri.js do-what-it-says
-
-const doWhatItSays =() => { 
-  console.clear();
-  console.log('do what it said fired');
-}
 
 
 
-switch (command) {
-  case 'my-tweets':
-    console.clear();
-    commands.myTweets();
-    break;
-  case 'spotify-this-song':
-    console.clear();
-    commands.spotifyThisSong(title);
-    break;
-  case 'movie-this':
-    console.clear();
-    commands.movieThis(title)
-    break;
-  case 'do-what-it-says':
-    console.clear();
-    commands.randomCommandom();
-    break;
-  default:
-    console.clear();
-    console.log(`Sorry, I do not recognise ${command}. Please choose from the following: my-tweets, spotify-this-song, movie-this, or do-what-this-says`);
-}
 
 

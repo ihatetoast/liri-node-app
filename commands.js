@@ -35,9 +35,7 @@ const getDate = () => {
 const fetchAllLogs = () => {
   try{
     var allTheLogs = fs.readFileSync("log.txt", "utf8")
-    
-    console.log(typeof allTheLogs);//string
-    // console.log(JSON.parse(allTheLogs)); //makes it json-y
+ 
     return JSON.parse(allTheLogs);
   }
   catch(error){
@@ -52,7 +50,6 @@ const updateLog = (results) =>{
   currentLogs.push(results);
   logData(currentLogs)
 }  
-      
 
 //LIRI COMMANDS
 const spotifyThisSong = (title) =>{
@@ -146,11 +143,16 @@ const randomCommandom = () => {
     spotifyThisSong(song);
   });
 }
+const showLog = () => {
+  var logTxt = fetchAllLogs();
+  console.log(logTxt);
+}
 
 
 module.exports = {
   spotifyThisSong,
   movieThis,
   myTweets,
-  randomCommandom
+  randomCommandom,
+  showLog
 }

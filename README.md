@@ -4,13 +4,13 @@ _Language_ Interpretation and Recognition Interface.
 
 LIRI understands 4 commands: 
 
-  * `my-tweets`
+  * my tweets
 
-  * `spotify-this-song`
+  * spotify this song
 
-  * `movie-this`
+  * movie this
 
-  * `do-what-it-says`
+  * do what this says
 
 LIRI was built with NodeJS and the following: 
 

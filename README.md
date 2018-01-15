@@ -5,12 +5,11 @@ _Language_ Interpretation and Recognition Interface.
 LIRI understands 4 commands: 
 
   * my tweets
-
   * spotify this song
-
   * movie this
-
   * do what this says
+  * show log
+
 
 LIRI was built with NodeJS and the following: 
 
@@ -18,6 +17,7 @@ LIRI was built with NodeJS and the following:
     * cli-table
     * request
     * dotenv
+    * inquirer
     
   * APIs:
   	* twitter

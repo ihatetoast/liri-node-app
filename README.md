@@ -1,25 +1,28 @@
 # LIRI
-Who is LIRI? LIRI is not who but a what: 
+
+Who is LIRI? LIRI is not who but a what:
 _Language_ Interpretation and Recognition Interface.
 
-LIRI understands 4 commands: 
+LIRI understands 5 commands:
 
-  * my tweets
-  * spotify this song
-  * movie this
-  * do what this says
-  * show log
+* my tweets
+* spotify this song
+* movie this
+* do what this says
+* show log
 
+[Liri Demo](liri_demo.gif)
 
-LIRI was built with NodeJS and the following: 
+LIRI was built with NodeJS and the following:
 
-  * npm packages:
-    * cli-table
-    * request
-    * dotenv
-    * inquirer
-    
-  * APIs:
-  	* twitter
-  	* spotify
-  	* omdb (via request)
+* npm packages:
+
+  * cli-table
+  * request
+  * dotenv
+  * inquirer
+
+* APIs:
+  * twitter
+  * spotify
+  * omdb (via request)

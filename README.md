@@ -11,7 +11,7 @@ LIRI understands 5 commands:
 * do what this says
 * show log
 
-[Liri Demo](liri_demo.gif)
+![Liri Demo](liri_demo.gif)
 
 LIRI was built with NodeJS and the following:
 
